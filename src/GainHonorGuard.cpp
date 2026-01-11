@@ -88,12 +88,12 @@ public:
 
     GainHonorGuard() : PlayerScript("GainHonorGuard") {}
 
-    void OnCreatureKill(Player* player, Creature* killed)  //override
+    void OnPlayerCreatureKill(Player* player, Creature* killed)  //override
     {
         RewardHonor(player, killed);
     }
 
-    void OnCreatureKilledByPet(Player* player, Creature* killed) //override
+    void OnPlayerCreatureKilledByPet(Player* player, Creature* killed) //override
     {
         RewardHonor(player, killed);
     }
@@ -156,17 +156,9 @@ public:
 
         //announce to player if honor was gained
         if (GainHonorGuardOnGuardKill && killed->ToCreature()->IsGuard() && GainHonorGuardOnGuardKillAnnounce)
-        {
-            std::ostringstream ss;
-            ss << "You have been awarded |cff4CFF00%i |rHonor.";
-            ChatHandler(player->GetSession()).PSendSysMessage(ss.str().c_str(), honor);
-        }
+            ChatHandler(player->GetSession()).PSendSysMessage("You have been awarded |cff4CFF00{} |rHonor.", honor);
         else if (GainHonorGuardOnEliteKill && killed->ToCreature()->isElite() && GainHonorGuardOnEliteKillAnnounce)
-        {
-            std::ostringstream ss;
-            ss << "You have been awarded |cffFF8000%i |rHonor.";
-            ChatHandler(player->GetSession()).PSendSysMessage(ss.str().c_str(), honor);
-        }
+            ChatHandler(player->GetSession()).PSendSysMessage("You have been awarded |cffFF8000{} |rHonor.", honor);
     }
 
     //Reward Honor from either a Guard (creature 32768 flag) or Elite kill.
